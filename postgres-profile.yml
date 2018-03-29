@@ -2,8 +2,12 @@
 - name: Create a PostgreSQL DB server
   hosts: all
   become: yes
-  yum:
-    name: postgresql-server
-    state: latest
+
+
+  tasks:
+    - name: Install Postgres
+      yum:
+        name: postgresql-server
+        state: latest
 
   
