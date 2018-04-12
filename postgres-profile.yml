@@ -5,15 +5,5 @@
   roles:
     - role: manala.motd
       manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} Postgres host"
-    - role: tcosta84.postgres
-      postgres_listen_addresses: 0.0.0.0
-      postgres_port: 5432
-    - role: FlatKey.firewalld
-      firewalld_service_rules:
-        postgresql:
-          state: enabled
-          zone: public
-          permanent: true
-          immediate: true
-
+    - role: patrik.uytterhoeven.PostgreSQL-For-RHEL6x
 

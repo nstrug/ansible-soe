@@ -2,4 +2,4 @@
 - src: manala.motd
 - src: FlatKey.firewalld
 - src: olibob.apache
-- src: tcosta84.postgres
+- src: patrik.uytterhoeven.PostgreSQL-For-RHEL6x
