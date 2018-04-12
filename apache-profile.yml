@@ -1,19 +1,16 @@
 ---
-- name: Configure a Postgres server
+- name: Configure an Apache server
   hosts: all
   become: yes
   roles:
     - role: manala.motd
       manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} Postgres host"
-    - role: tcosta84.postgres
-      postgres_listen_addresses: 0.0.0.0
-      postgres_port: 5432
+    - role: olibob.apache
     - role: FlatKey.firewalld
       firewalld_service_rules:
-        postgresql:
+        http:
           state: enabled
           zone: public
           permanent: true
           immediate: true
-
 
