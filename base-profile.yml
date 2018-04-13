@@ -5,5 +5,6 @@
   roles:
     - role: manala.motd
       manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} base host"
+
     - role: FlatKey.firewalld
       default_zone: public

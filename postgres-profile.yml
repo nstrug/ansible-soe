@@ -5,5 +5,26 @@
   roles:
     - role: manala.motd
       manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} Postgres host"
-    - role: patrik.uytterhoeven.PostgreSQL-For-RHEL6x
+
+  tasks:
+    - name: Install postgresql-server
+      yum:
+        name: postgresql-server
+        state: latest
+
+    - name: Initialise the database
+      command: postgresql-setup initdb
+      ignore_errors: yes
+
+    - name: Ensure postgresql-server is started
+      service:
+        name: postgresql
+        state: started
+
+    - name: Ensure postgresql-server is enabled
+      service:
+        name: postgresql
+        enabled: yes
+
+
 
