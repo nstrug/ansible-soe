@@ -14,7 +14,7 @@
           zone: public
           permanent: true
           immediate: true
-          
+
   tasks:
     - name: Install postgresql-server
       yum:

@@ -4,8 +4,8 @@
   become: yes
   roles:
     - role: manala.motd
-      manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} Postgres host"
-    - role: olibob.apache
+      manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} Apache host"
+
     - role: FlatKey.firewalld
       firewalld_service_rules:
         http:
@@ -13,4 +13,24 @@
           zone: public
           permanent: true
           immediate: true
+        https:
+          state: enabled
+          zone: public
+          permanent: true
+          immediate: true
 
+  tasks:
+    - name: Install Apache
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Ensure apache is started
+      service:
+        name: httpd
+        state: started
+
+    - name: Ensure apache is enabled
+      service:
+        name: httpd
+        enabled: yes
