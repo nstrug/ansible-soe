@@ -6,6 +6,15 @@
     - role: manala.motd
       manala_motd_message: "Welcome to this Satellite-Ansible managed {{ foreman.operatingsystem_name }} Postgres host"
 
+    - role: FlatKey.firewalld
+      default_zone: public
+      firewalld_service_rules:
+        postgresql:
+          state: enabled
+          zone: public
+          permanent: true
+          immediate: true
+          
   tasks:
     - name: Install postgresql-server
       yum:
