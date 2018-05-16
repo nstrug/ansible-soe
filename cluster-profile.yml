@@ -1,0 +1,19 @@
+---
+- name: Install RHCS dependencies
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install postgresql-server
+      yum:
+        name: {{ item }}
+        state: latest
+      with_items:
+        - pcs
+        - pacemaker
+        - fence-agents-all
+    - name: Open firewall ports
+      firewalld:
+        service: high-availability
+        permanent: true
+        state: enabled
+
