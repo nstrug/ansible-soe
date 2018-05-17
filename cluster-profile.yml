@@ -17,5 +17,13 @@
         permanent: true
         state: enabled
     - name: Set hacluster passwd
-      shell: echo 'r3dhat00' | passwd --stdin hacluster
+      shell: echo {{ hacluster_passwd }} | passwd --stdin hacluster
+    - name: Start pcsd
+      service:
+        name: pcsd
+        enabled: yes
+        state: started
+    - name: Authenticate pcs
+      shell: pcs cluster auth {{ foreman_parms.cluster_peers }} -u hacluster -p {{ hacluster_passwd }}
+
 
