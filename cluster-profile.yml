@@ -17,5 +17,5 @@
         permanent: true
         state: enabled
     - name: Set hacluster passwd
-      shell: cat 'r3dhat00' passwd --stdin hacluster
-      
+      shell: cat 'r3dhat00' | passwd --stdin hacluster
+
