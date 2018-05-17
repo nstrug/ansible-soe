@@ -24,6 +24,6 @@
         enabled: yes
         state: started
     - name: Authenticate pcs
-      shell: pcs cluster auth {{ foreman_params.cluster_peers }} -u hacluster -p {{ foreman_params.hacluster_passwd | join(' ') }}
+      shell: pcs cluster auth {{ foreman_params.cluster_peers | join(' ') }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
 
 
