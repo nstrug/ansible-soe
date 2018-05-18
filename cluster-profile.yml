@@ -41,7 +41,9 @@
       msg: ansible_hostname is {{ ansible_hostname }}
     - name: Create cluster
       command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }}
-      when: "{{ ansible_hostname }} == {{ master }}"
+      delegate_to: "{{ master }}"
+      run_once: true
+
 
 
 
