@@ -38,14 +38,8 @@
       command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }}
       when: "{{ ansible_hostname }} == {{ master }}"
 
-    - debug:
-        msg: Master is {{ master }}
+ 
 
-- name: Create Cluster
-  hosts: {{ master }}
-  become: yes
-  tasks:
-    - name: Wait for other cluster members to come up
 
 
     # name: Wait for all cluster members to be up
