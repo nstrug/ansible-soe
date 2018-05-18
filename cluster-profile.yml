@@ -26,5 +26,13 @@
         state: started
     - name: Authenticate pcs
       shell: pcs cluster auth {{ foreman_params.cluster_peers }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
+    - name: Determine master
+      set_fact: master={{ foreman_params.cluster_peers.split(" ")|sort[0] }}
 
+    - debug:
+      msg: Master is {{ master }}
+    # name: Wait for all cluster members to be up
+
+
+    # name: Create cluster
 
