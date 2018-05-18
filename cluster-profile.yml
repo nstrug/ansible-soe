@@ -29,7 +29,7 @@
         enabled: yes
         state: started
     - name: Authenticate pcs
-      shell: pcs cluster auth {{ peers.join(" ") }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
+      shell: pcs cluster auth {{ peers|join(" ") }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
 
     - debug:
         msg: Master is {{ master }}
