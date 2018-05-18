@@ -35,6 +35,10 @@
       with_items: "{{ peer_list }}"
     - name: Authenticate pcs
       command: pcs cluster auth {{ foreman_params.hacluster_peers }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
+    - debug:
+      msg: Master is  {{ master }}
+    - debug:
+      msg: ansible_hostname is {{ ansible_hostname }}
     - name: Create cluster
       command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }}
       when: "{{ ansible_hostname }} == {{ master }}"
