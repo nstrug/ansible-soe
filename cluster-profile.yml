@@ -4,9 +4,9 @@
   become: yes
   tasks:
     - name: Split cluster_peers
-      set_fact: peers={{ foreman_params.cluster_peers.split(" ")|sort }}
+      set_fact: peer_list={{ foreman_params.hacluster_peers.split(" ")|sort }}
     - name: Determine master
-      set_fact: master=peers[0]
+      set_fact: master={{ peer_list[0] }}
     - name: Install RPMs
       yum:
         name: "{{ item }}"
@@ -28,11 +28,26 @@
         name: pcsd
         enabled: yes
         state: started
+    - name: Wait until all nodes in cluster are up
+      wait_for:
+        host: "{{ item }}"
+      with_items: "{{ peer_list }}"
     - name: Authenticate pcs
-      shell: pcs cluster auth {{ peers|join(" ") }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
+      command: pcs cluster auth {{ foreman_params.hacluster_name }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
+    - name: Create cluster
+      command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }}
+      when: "{{ ansible_hostname }}" == {{ master }}
 
     - debug:
         msg: Master is {{ master }}
+
+- name: Create Cluster
+  hosts: {{ master }}
+  become: yes
+  tasks:
+    - name: Wait for other cluster members to come up
+
+
     # name: Wait for all cluster members to be up
 
 
