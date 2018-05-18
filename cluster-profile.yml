@@ -14,8 +14,8 @@
     - name: Open firewall ports
       firewalld:
         service: high-availability
+        immediate: yes
         permanent: true
-        state: enabled
     - name: Set hacluster passwd
       shell: echo {{ foreman_params.hacluster_passwd }} | passwd --stdin hacluster
     - name: Start pcsd
