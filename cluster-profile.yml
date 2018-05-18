@@ -30,6 +30,7 @@
         state: started
     - name: Wait until all nodes in cluster are up
       wait_for:
+        port: 22
         host: "{{ item }}"
       with_items: "{{ peer_list }}"
     - name: Authenticate pcs
@@ -38,7 +39,7 @@
       command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }}
       when: "{{ ansible_hostname }} == {{ master }}"
 
- 
+
 
 
 
