@@ -21,8 +21,14 @@
 
 - name: Copy in fence_xvm key
   copy:
-    source: "{{ playbook_dir}}/files/fence_xvm.key"
+    src: "{{ playbook_dir}}/files/fence_xvm.key"
     dest: /etc/cluster
+
+- name: Create fence domain
+  command: pcs stonith create xvmfence fence_xvm key_file=/etc/cluster/fence_xvm.key
+  delegate_to: "{{ master }}"
+  run_once: true
+  when: cluster_configured is failed
 
 
 

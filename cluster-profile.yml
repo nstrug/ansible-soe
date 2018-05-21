@@ -42,24 +42,24 @@
 
     - name: Check if cluster already running
       command: pcs cluster status
-      register: cluster_status
+      register: cluster_configured
       ignore_errors: true
       changed_when: false
 
     - name: Authenticate pcs
       command: pcs cluster auth {{ foreman_params.hacluster_peers }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
-      when: cluster_status is failed
+      when: cluster_configured is failed
 
     - name: Create cluster
       command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }} --force
       delegate_to: "{{ master }}"
       run_once: true
-      when: cluster_status is failed
+      when: cluster_configured is failed
 
     - name: Enable services
       command: pcs cluster enable --all
       run_once: true
-      when: cluster_status is failed
+      when: cluster_configured is failed
 
     - include: rhcs-fencing.yml
       when: foreman_params.hacluster_fencing == 'rhcs'
