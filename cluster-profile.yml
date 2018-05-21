@@ -1,5 +1,5 @@
 ---
-- name: Install RHCS dependencies
+- name: Configure Red Hat Cluster Suite
   hosts: all
   become: yes
   tasks:
@@ -21,7 +21,7 @@
     - name: Open firewall ports
       firewalld:
         service: high-availability
-        immediate: yes
+        immediate: true
         permanent: true
         state: enabled
 
@@ -44,6 +44,7 @@
       command: pcs cluster status
       register: cluster_status
       ignore_errors: true
+      changed_when: false
 
     - name: Authenticate pcs
       command: pcs cluster auth {{ foreman_params.hacluster_peers }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
@@ -54,6 +55,18 @@
       delegate_to: "{{ master }}"
       run_once: true
       when: cluster_status is failed
+
+    - name: Enable services
+      command: pcs cluster enable --all
+      run_once: true
+      when: cluster_status is failed
+
+    - include: rhcs-fencing.yml
+      when: foreman_params.hacluster_fencing == 'rhcs'
+
+    - include: vmware-fencing.yml
+      when: foreman_params.hacluster_fencing == 'vmware'
+
 
 
 
