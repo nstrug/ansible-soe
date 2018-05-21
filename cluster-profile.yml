@@ -50,7 +50,7 @@
       when: cluster_status is failed
 
     - name: Create cluster
-      command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }}
+      command: pcs cluster setup --start --name {{ foreman_params.hacluster_name }} {{ foreman_params.hacluster_peers }} --force
       delegate_to: "{{ master }}"
       run_once: true
       when: cluster_status is failed
