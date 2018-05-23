@@ -1,22 +1,16 @@
 ---
 
-- name: Echo the vcentre password
-  debug:
-    msg: Encrypted centre Password is "{{ foreman_params.hacluster_vcentre_passwd }}"
-
 - name: Decrypt the vcentre password
   shell: echo {{ foreman_params.hacluster_vcentre_passwd }} | openssl enc -pass pass:{{ foreman_key }} -d -aes-256-cbc -a
   register: decrypted_vcentre_passwd
-
-- name: Print the decrypted vcentre password
-  debug:
-    msg: Decrypted vcentre password is "{{ decrypted_vcentre_passwd }}"
+  no_log: true
 
 - name: Create fence domain
   command: >
     pcs stonith create vmfence fence_vmware_soap ipaddr={{ foreman_params.hacluster_vcentre_ip }}
-    ssl=1 login={{ foreman_params.hacluster_vcentre_login }} passwd={{ foreman_params.hacluster_vcentre_passwd }}
+    ssl=1 login={{ foreman_params.hacluster_vcentre_login }} passwd={{ decrypted_vcentre_passwd.stdout }}
   run_once: true
+  no_log: true
 
 
 
