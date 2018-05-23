@@ -28,8 +28,8 @@ set them as hostgroup or host collection parameters, rather than on individual n
 - **hacluster_passwd** The password to use for authenticating the ```pcs``` user.
 - **hacluster_name** The name of the cluster to configure.
 - **hacluster_fence_xvm_key** filename of fence_xvm_key to use (XVM fencing only)
-- **hacluster_vcentre_ip** IP address of Vmware vCenter (vmware fencing only)
-- **hacluster_vcentre_login** Username to use to access the Vmware vCenter (vmware fencing only)
+- **hacluster_vcentre_ip** IP address of Vmware vCentre (vmware fencing only)
+- **hacluster_vcentre_login** Username to use to access the Vmware vCentre (vmware fencing only)
 - **hacluster_vcentre_passwd** Password to use to access the VMware vCentre (vmware fencing only)
 
 
