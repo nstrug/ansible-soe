@@ -22,5 +22,5 @@
 
 - name: Copy in fence_xvm key
   copy:
-    src: "{{ playbook_dir}}/files/fence_xvm.key"
+    src: "{{ playbook_dir}}/files/{{ foreman_params.hacluster_fence_xvm_key }}"
     dest: /etc/cluster

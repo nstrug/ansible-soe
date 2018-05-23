@@ -1,6 +1,6 @@
 ---
 
 - name: Create fence domain
-  command: pcs stonith create xvmfence fence_xvm key_file=/etc/cluster/fence_xvm.key
+  command: pcs stonith create xvmfence fence_xvm key_file=/etc/cluster/{{ foreman_params.hacluster_fence_xvm_key }}
   run_once: true
 

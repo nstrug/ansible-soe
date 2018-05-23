@@ -10,7 +10,7 @@ It installs dependencies, opens firewall ports and prepares the node for integra
 
 It does not however configure the cluster, this is done at a later stage by the **configure-cluster** playbook.
 
-For XVM fencing, the playbook will use the key stored at ```{{ playbook_dir}}/files/fence_xvm.key```
+For XVM fencing, the playbook will use the vaulted key stored at ```{{ playbook_dir}}/files/{{ foreman_params.hacluster_fence_xvm_key }}```
 
 ## configure-cluster
 
@@ -27,6 +27,7 @@ set them as hostgroup or host collection parameters, rather than on individual n
   as used by libvirt, or ```vmware``` to specify VmWare fencing.
 - **hacluster_passwd** The password to use for authenticating the ```pcs``` user.
 - **hacluster_name** The name of the cluster to configure.
+- **hacluster_fence_xvm_key** filename of fence_xvm_key to use (XVM fencing only)
 - **hacluster_vcentre_ip** IP address of Vmware vCenter (vmware fencing only)
 - **hacluster_vcentre_login** Username to use to access the Vmware vCenter (vmware fencing only)
 - **hacluster_vcentre_passwd** Password to use to access the VMware vCentre (vmware fencing only)
