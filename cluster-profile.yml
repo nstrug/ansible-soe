@@ -5,10 +5,10 @@
   tasks:
 
     - name: Authenticate pcs
-      command: pcs cluster auth {{ ansible_play_hosts }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
+      command: pcs cluster auth {{ ansible_play_hosts|join(" ") }} -u hacluster -p {{ foreman_params.hacluster_passwd }}
 
     - name: Create cluster
-      command: pcs cluster setup --start --name {{ ansible_play_hosts }} {{ foreman_params.hacluster_peers }} --force
+      command: pcs cluster setup --start --name {{ ansible_play_hosts|join(" ") }} {{ foreman_params.hacluster_peers }} --force
       run_once: true
 
     - name: Enable services
