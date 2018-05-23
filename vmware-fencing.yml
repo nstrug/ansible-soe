@@ -2,7 +2,7 @@
 
 - name: Echo the vcentre password
   debug:
-    msg: Vcentre Password is 
+    msg: Vcentre Password is "{{ foreman_params.hacluster_vcentre_passwd }}"
 
 - name: Create fence domain
   command: >
