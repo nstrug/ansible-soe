@@ -32,4 +32,17 @@ set them as hostgroup or host collection parameters, rather than on individual n
 - **hacluster_vcentre_login** Username to use to access the Vmware vCentre (vmware fencing only)
 - **hacluster_vcentre_passwd** Password to use to access the VMware vCentre (vmware fencing only)
 
+**NB** The playbook expects ```hacluster_vcentre_passwd``` to be an AES256 encrypted string. You can generate this
+using:
+
+```echo -n <plaintext_passwd> | openssl enc -e -aes-256-cbc -a -salt```
+
+and entering a passphrase when prompted. The encrypted string that is output should be stored 
+in the ```hacluster_vcentre_passwd``` in satellite.
+
+The playbook will attempt to decrypt the string with an extra_var called ```foreman_key```. This will not
+be echoed to the log output, however for additional security it would make sense to store this key in
+a custom credential, rather than adding it to the inventory.
+  
+
 
