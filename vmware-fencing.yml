@@ -2,7 +2,15 @@
 
 - name: Echo the vcentre password
   debug:
-    msg: Vcentre Password is "{{ foreman_params.hacluster_vcentre_passwd }}"
+    msg: Encrypted centre Password is "{{ foreman_params.hacluster_vcentre_passwd }}"
+
+- name: Decrypt the vcentre password
+  shell: echo "{{ foreman_params.hacluster_vcentre_passwd }}" | openssl enc -pass pass:{{ foreman_key }} -f -aes-256-cbc -a
+  register: decrypted_vcentre_passwd
+
+- name: Print the decrypted vcentre password
+  debug:
+    msg: Decrypted vcentre password is "{{ decrypted_vcentre_passwd }}"
 
 - name: Create fence domain
   command: >
