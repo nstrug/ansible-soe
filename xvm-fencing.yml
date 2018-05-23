@@ -1,34 +1,6 @@
 ---
-- name: Install fence_xvm
-  yum:
-   name: fence-virt
-   state: latest
-
-- name: Open fence_xvm firewall port
-  firewalld:
-    port: 1229/tcp
-    immediate: true
-    permanent: true
-    state: enabled
-
-- name: Create /etc/cluster
-  file:
-    path: /etc/cluster
-    owner: root
-    group: root
-    state: directory
-    mode: 0755
-
-- name: Copy in fence_xvm key
-  copy:
-    src: "{{ playbook_dir}}/files/fence_xvm.key"
-    dest: /etc/cluster
 
 - name: Create fence domain
   command: pcs stonith create xvmfence fence_xvm key_file=/etc/cluster/fence_xvm.key
-  delegate_to: "{{ master }}"
   run_once: true
-  when: cluster_configured is failed
-
-
 

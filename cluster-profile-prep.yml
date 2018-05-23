@@ -1,0 +1,37 @@
+---
+- name: Install Red Hat Cluster Suite
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install RPMs
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - pcs
+        - pacemaker
+        - fence-agents-all
+
+    - name: Open firewall ports
+      firewalld:
+        service: high-availability
+        immediate: true
+        permanent: true
+        state: enabled
+
+    - include: xvm-fencing-prep.yml
+      when: foreman_params.hacluster_fencing == 'xvm'
+
+    - include: vmware-fencing-prep.yml
+      when: foreman_params.hacluster_fencing == 'vmware'
+
+    - name: Set hacluster passwd
+      shell: echo {{ foreman_params.hacluster_passwd }} | passwd --stdin hacluster
+
+    - name: Start pcsd
+      service:
+        name: pcsd
+        enabled: yes
+        state: started
+
