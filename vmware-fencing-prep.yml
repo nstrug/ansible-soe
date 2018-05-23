@@ -1,2 +1,5 @@
 ---
-
+- name: Install fence_vmware_soap
+  yum:
+   name: fence-agents-vmware-soap
+   state: latest

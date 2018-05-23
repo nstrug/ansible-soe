@@ -1,5 +1,9 @@
 ---
-
+- name: Create fence domain
+  command: >
+    pcs stonith create vmfence fence_vmware_soap ipaddr={{ foreman_params.hacluster_vcentre_ip }}
+    ssl=1 login={{ foreman_params.hacluster_vcentre_login }} passwd={{ foreman_params.hacluster_passwd }}
+  run_once: true
 
 
 
